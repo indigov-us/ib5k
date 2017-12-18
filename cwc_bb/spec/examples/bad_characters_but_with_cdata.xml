@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<CWC>
+   <CWCVersion>1.0</CWCVersion>
+   <Delivery>
+      <DeliveryId>LKAP1036285LFVUID194HDCl6452ADDF</DeliveryId>
+      <DeliveryDate>20100121</DeliveryDate>
+      <DeliveryAgent>Hill Data Group</DeliveryAgent>
+      <DeliveryAgentAckEmailAddress>email_acknowledge@hdg.com</DeliveryAgentAckEmailAddress>
+      <DeliveryAgentContact>
+         <DeliveryAgentContactName>John Smith</DeliveryAgentContactName>
+         <DeliveryAgentContactEmail>john.smith@hdg.com</DeliveryAgentContactEmail>
+         <DeliveryAgentContactPhone>202-555-5678</DeliveryAgentContactPhone>
+      </DeliveryAgentContact>
+      <Organization>American Education Coalition</Organization>
+      <OrganizationContact>
+         <OrganizationContactName>Jane Doe</OrganizationContactName>
+         <OrganizationContactEmail>jane.doe@aec.org</OrganizationContactEmail>
+         <OrganizationContactPhone>202-555-1212</OrganizationContactPhone>
+      </OrganizationContact>
+      <OrganizationAbout>AEC is a grassroots association of students, parents, educators, and professionals dedicated to advancing education in America.</OrganizationAbout>
+      <CampaignId>8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92</CampaignId>
+   </Delivery>
+   <Recipient>
+      <MemberOffice>HWY01</MemberOffice>
+      <IsResponseRequested>N</IsResponseRequested>
+      <NewsletterOptIn>Y</NewsletterOptIn>
+   </Recipient>
+   <Constituent>
+      <Prefix>Mr.</Prefix>
+      <FirstName>John</FirstName>
+      <MiddleName>A.</MiddleName>
+      <LastName>Tova</LastName>
+      <Suffix>Jr.</Suffix>
+      <Title>Vice Principal</Title>
+      <ConstituentOrganization>Sandview Elementary School</ConstituentOrganization>
+      <Address1>2101 O'Neil Avenue</Address1>
+      <Address2>Room 310</Address2>
+      <City>Cheyenne</City>
+      <StateAbbreviation>WY</StateAbbreviation>
+      <Zip>82001-3512</Zip>
+      <Phone>307-555-1212</Phone>
+      <AddressValidation>Y</AddressValidation>
+      <Email>jtova@someplace.com</Email>
+      <EmailValidation>Y</EmailValidation>
+   </Constituent>
+   <Message>
+      <Subject>Excellence in Education</Subject>
+      <LibraryOfCongressTopic>Education</LibraryOfCongressTopic>
+      <LibraryOfCongressTopic>Science, Technology, Communications</LibraryOfCongressTopic>
+      <Bill>
+         <BillCongress>111</BillCongress>
+         <BillTypeAbbreviation>hr</BillTypeAbbreviation>
+         <BillNumber>233</BillNumber>
+      </Bill>
+      <Bill>
+         <BillCongress>111</BillCongress>
+         <BillTypeAbbreviation>s</BillTypeAbbreviation>
+         <BillNumber>22</BillNumber>
+      </Bill>
+      <ProOrCon>Pro</ProOrCon>
+      <OrganizationStatement>I urge you to support the Education for All Americans Act of 2009 to help foster learning for all Americans, benefitting their communities and themselves.</OrganizationStatement>
+      <ConstituentMessage><![CDATA[Dear Congresswoman>..............., as a father of two small children, I believe that nothing is more important than access to education.<, >, &, ‘, and ", ]]></ConstituentMessage>
+      <MoreInfo>http://www.aec.org/issue/legislation/HR233/</MoreInfo>
+   </Message>
+</CWC>

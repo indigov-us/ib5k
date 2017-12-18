@@ -1,0 +1,13 @@
+CWC simple api for incoming mail from third party vendors
+
+== xml validation
+the main document is the cwc_schema.rnc the .rng and xsd documents are generated using trang (http://www.thaiopensource.com/relaxng/trang.html)
+
+== changes from 1.0 to 2.0 (api)
+
+* CamelCase schema
+* Tweak the schema to be more in line with the spec
+* V2 api always returns xml formatted error message on the rest points that accept XML as input
+* XML API for the CRM vendors to retrieve emails
+* XML/JSON API for the Advocacy Vendors to retrieve messages they have sent (by apikey)
+* Improved documentation

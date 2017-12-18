@@ -1,0 +1,6 @@
+src/
+vendor/
+dev-resources/
+target/classes/
+target/cljsbuild*
+resources/public/js/out/

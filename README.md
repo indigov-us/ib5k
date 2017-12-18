@@ -1,0 +1,5 @@
+### Run application:
+
+```
+lein run
+```

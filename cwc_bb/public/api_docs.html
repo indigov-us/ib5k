@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CWC</title>
+    <link type="text/css" href="style/bootstrap.min.css" rel="stylesheet" />
+    <link type="text/css" href="style/cwc.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/cwc.js"></script>
+
+    <style type="text/css">
+      body { padding-top: 60px; }
+      .content { margin-left: 180px !important; }
+      .sidebar { width: 160px !important; }
+      .nowrap { white-space: nowrap; }
+      #create { margin-top: 20px; }
+      #create label { font-size: small; margin-left: 4px; text-align: left; width: 200px; }
+      #recent { list-style-type: none; }
+      #recent li { margin-bottom: 4px; }
+      #recent .color { margin-left: -22px; float: left; }
+    </style>
+  </head>
+  <body>
+
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="index.html">Communicating with Congress <span class="label success">Prototype</span></a>
+
+          <ul class="nav" style="float: right;">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="registration.html">Registration</a></li>
+            <li><a href="api_docs.html">API</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h1>API V2</h1>
+      <h1>Authentication</h1>
+      <p>You must pass your api key (received by registering on this site), as a apikey url parameter or X-APIKEY header</p>
+      <h1>API</h1>
+      <h2>Send</h2>
+      <ol>
+        <li>
+          <b>POST /v2/message</b><br/>
+          the body of the request must be properly formated xml. (as per the cwc v 1.0 specification)
+          <br/>
+          If the xml is properly formatted (as per the xml schema definition that can be found here : http://cwc_app.house.gov/schema/cwc_schema_v2.xsd ) the message will be saved to the database for delivery
+          <br/><br/><p><b>Return codes</b><br/>
+            <p>will retrurn http status code 200 if it succeeds or:</p>
+            <p>on error : http status code 400 with a json encoded error from the xml
+            schema validation, for example if we omit the memberoffice xml element we get something like this:
+            <br/><br/>
+            <pre>
+&lt;?xml version="1.0"?&gt;
+&lt;Errors&gt;
+  &lt;Error&gt;Expecting an element OrganizationStatement, got nothing&lt;/Error&gt;
+  &lt;Error&gt;Invalid sequence in interleave&lt;/Error&gt;
+  &lt;Error&gt;Element Message failed to validate content&lt;/Error&gt;
+  &lt;Error&gt;Did not expect element ExtraStuff there&lt;/Error&gt;
+&lt;/Errors&gt;</pre>
+            </p>
+          </p>
+        </li>
+      </ol>
+      <h2>Validation</h2>
+      <ol>
+        <li>
+          <b>POST /v2/validate</b><br/>
+          the body of the request must be properly formated xml. (as per the cwc v 1.0 specification)
+          <br/>
+          If the xml is properly formatted (as per the xml schema definition that can be found here : http://cwc_app.house.gov/schema/cwc_schema_v2.xsd ) the message will NOT be saved to the database for delivery (this restpoint is only used for validation/testing purposes)
+          <br/><br/><p><b>Return codes</b><br/>
+            <p>will retrurn http status code 200 if it succeeds or:</p>
+            <p>on error : http status code 400 with a json encoded error from the xml
+            schema validation, for example if we omit the memberoffice xml element we get something like this:
+            <br/><br/>
+            <pre>
+&lt;?xml version="1.0"?&gt;
+&lt;Errors&gt;
+  &lt;Error&gt;Expecting an element OrganizationStatement, got nothing&lt;/Error&gt;
+  &lt;Error&gt;Invalid sequence in interleave&lt;/Error&gt;
+  &lt;Error&gt;Element Message failed to validate content&lt;/Error&gt;
+  &lt;Error&gt;Did not expect element ExtraStuff there&lt;/Error&gt;
+&lt;/Errors&gt;</pre>
+            </p>
+          </p>
+        </li>
+      </ol>
+      <h2>CMS vendor email retreival</h2>
+      <ol>
+        <li>
+          <p><b>POST http://cwc_app.house.gov/v2/{OFFICE_CODE}/mark_as_delivered</b></p>
+          <p>Required parameters</p>
+          <ul>
+            <li><b>{OFFICE_CODE}</b> - the office code - like HVA07</li>
+            <li><b>message body</b> - list of messages to mark as delivered (xml format), each message is identified by a combination of DeliveryId and DeliveryAgent</li>
+          </ul>
+          <br/>
+          <p><b>Sample of the request body</b></p>
+          <pre>
+&lt;?xml version="1.0"?&gt;
+&lt;MarkAsDelivered&gt;
+  &lt;Messages&gt;
+    &lt;Message&gt;
+      &lt;DeliveryId&gt;a5771bce93e200c36f7cd9dfd0e5deaa&lt;/DeliveryId&gt;
+      &lt;DeliveryAgent&gt;Agent name&lt;/DeliveryAgent&gt;
+    &lt;/Message&gt;
+    &lt;Message&gt;
+      &lt;DeliveryId&gt;812b4ba287f5ee0bc9d43bbf5bbe87fb&lt;/DeliveryId&gt;
+      &lt;DeliveryAgent&gt;Agent name&lt;/DeliveryAgent&gt;
+    &lt;/Message&gt;
+    &lt;Message&gt;
+      &lt;DeliveryId&gt;8f14e45fceea167a5a36dedd4bea2543&lt;/DeliveryId&gt;
+      &lt;DeliveryAgent&gt;Agent name&lt;/DeliveryAgent&gt;
+    &lt;/Message&gt;
+  &lt;/Messages&gt;
+&lt;/MarkAsDelivered&gt;</pre>
+
+          <p><b>Response</b></p>
+          On success:
+          <pre>
+&lt;?xml version="1.0"?&gt;
+&lt;Response&gt;
+  &lt;Success&gt;All messages marked as delivered&lt;/Success&gt;
+&lt;/Response&gt;</pre>
+          On error:
+          <pre>
+&lt;?xml version="1.0"?&gt;
+&lt;Response&gt;
+  &lt;Error&gt;Erorr while parsing request&lt;/Error&gt;
+&lt;/Response&gt;</pre>
+        </li>
+        <li>
+          <p><b>GET http://cwc_app.house.gov/v2/{OFFICE_CODE}/queue.[xml|json]</b></p>
+          <p>Supported parameters</p>
+          <ul>
+            <li><b>{OFFICE_CODE}</b> - the office code - like HVA07</li>
+            <li><b>skip</b> - how many messages to skip</li>
+            <li><b>limit</b> - limit the number of returned results</li>
+          </ul>
+          <p>at this point the xml to formproc interface is not enabled, but a very
+            simple json/xml api is available</p>
+          <p>if we send a get request to:<br/>
+            http://cwc_app.house.gov/v2/hva07/queue.xml
+            we will get back the message we just send
+          </p>
+          <p>
+            you can use curl or any other advanced request client to generate the
+            proper requests.
+          </p>
+          <p><b>Sample Response</b></p>
+          <pre>
+&lt;Response&gt;
+  &lt;Messages&gt;
+    &lt;Message&gt;
+      xml message content here
+    &lt;/Message&gt;
+    &lt;Message&gt;
+      xml message content here
+    &lt;/Message&gt;
+  &lt;/Messages&gt;
+  &lt;Count&gt;10&lt;/Count&gt;
+  &lt;Skip&gt;0&lt;/Skip&gt;
+  &lt;Limit&gt;10&lt;/Limit&gt;
+  &lt;TotalCount&gt;30&lt;/TotalCount&gt;
+&lt;/Response&gt;</pre>
+        </li>
+      </ol>
+      <h2>Advocacy Vendors Test API</h2>
+      <ol>
+        <li>
+          <p><b>GET /v2/messages.xml (or .json for json response)</b></p>
+          <p>Supported parameters</p>
+          <ul>
+            <li><b>apikey</b> or <b>X-APIKEY</b> - required</li>
+            <li><b>skip</b> - how many messages to skip</li>
+            <li><b>limit</b> - limit the number of returned results</li>
+          </ul>
+          <p><b>Sample Response</b></p>
+          <pre>
+&lt;Response&gt;
+  &lt;Messages&gt;
+    &lt;Message&gt;
+      xml message content here
+    &lt;/Message&gt;
+    &lt;Message&gt;
+      xml message content here
+    &lt;/Message&gt;
+  &lt;/Messages&gt;
+  &lt;Count&gt;10&lt;/Count&gt;
+  &lt;Skip&gt;0&lt;/Skip&gt;
+  &lt;Limit&gt;10&lt;/Limit&gt;
+  &lt;TotalCount&gt;30&lt;/TotalCount&gt;
+&lt;/Response&gt;</pre>
+        </li>
+      </ol>
+      <h2>Simple Statistics API</h2>
+      <ol>
+        <li>
+          <p><b>GET /stats/:from/:to)</b></p>
+          <p>Supported parameters</p>
+          <ul>
+            <li><b>from and to</b> - the desired time range (inclusive on both ends), date must be in <b>2012-Sep-04</b> format</li>
+            <li><b>apikey</b> - limit the results only to messages received by this api key</li>
+            <li><b>office_id</b> - limit the results only to messages received for this office id</li>
+            <li><b>campaign_id</b> - limit the results only to messages received for this campaign id</li>
+          </ul>
+          <br/><p><b>Sample request</b></p>
+          <p><b>Request</b>: /stats/2012-Sep-04/2012-Sep-04</p>
+          <p><b>Response</b>: (in this example we shortened the campaign ids in order to show the result structure</p>
+          <pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Result&gt;
+  &lt;Total&gt;8&lt;/Total&gt;
+  &lt;Offices&gt;
+    &lt;HVA07&gt;
+      &lt;Total&gt;4&lt;/Total&gt;
+      &lt;Campaigns&gt;
+        &lt;7f225&gt;2&lt;/7f225&gt;
+        &lt;3fdba&gt;2&lt;/3fdba&gt;
+      &lt;/Campaigns&gt;
+    &lt;/HVA07&gt;
+    &lt;HMD05&gt;
+      &lt;Total&gt;2&lt;/Total&gt;
+      &lt;Campaigns&gt;
+        &lt;7f225&gt;1&lt;/7f225&gt;
+        &lt;3fdba&gt;1&lt;/3fdba&gt;
+      &lt;/Campaigns&gt;
+    &lt;/HMD05&gt;
+    &lt;HCA22&gt;
+      &lt;Total&gt;2&lt;/Total&gt;
+      &lt;Campaigns&gt;
+        &lt;7f225&gt;1&lt;/7f225&gt;
+        &lt;3fdba&gt;1&lt;/3fdba&gt;
+      &lt;/Campaigns&gt;
+    &lt;/HCA22&gt;
+  &lt;/Offices&gt;
+  &lt;Campaigns&gt;
+    &lt;7f225&gt;
+      &lt;Total&gt;4&lt;/Total&gt;
+      &lt;Offices&gt;
+        &lt;HVA07&gt;2&lt;/HVA07&gt;
+        &lt;HMD05&gt;1&lt;/HMD05&gt;
+        &lt;HCA22&gt;1&lt;/HCA22&gt;
+      &lt;/Offices&gt;
+    &lt;/7f225&gt;
+    &lt;3fdba&gt;
+      &lt;Total&gt;4&lt;/Total&gt;
+      &lt;Offices&gt;
+        &lt;HVA07&gt;2&lt;/HVA07&gt;
+        &lt;HMD05&gt;1&lt;/HMD05&gt;
+        &lt;HCA22&gt;1&lt;/HCA22&gt;
+      &lt;/Offices&gt;
+    &lt;/3fdba&gt;
+  &lt;/Campaigns&gt;
+&lt;/Result&gt;
+          </pre>
+        </li>
+      </ol>
+    </div>
+
+  </body>
+</html>

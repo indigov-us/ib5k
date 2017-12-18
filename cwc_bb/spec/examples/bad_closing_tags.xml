@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<CWC>
+  <CWCVersion>1.0</cwcversion>
+  <Delivery>
+    <DeliveryId>9778d5d219c5080b9a6a17bef029331c</deliveryid>
+    <DeliveryDate>20120311</deliverydate>
+    <DeliveryAgent>Agent name</deliveryagent>
+    <DeliveryAgentAckEmailAddress>someemail@gmail.com</deliveryagentackemailaddress>
+    <DeliveryAgentContact>
+      <DeliveryAgentContactName>Contact Name</deliveryagentcontactname>
+      <DeliveryAgentContactEmail>otheremail@gmail.com</deliveryagentcontactemail>
+      <DeliveryAgentContactPhone>202-555-5678</deliveryagentcontactphone>
+    </DeliveryagentContact>
+    <CampaignId>7f2253d7e228b22a08bda1f09c516f6fead81df6536eb02fa991a34bb38d9be8</campaignid>
+  </Delivery>
+  <Recipient>
+    <MemberOffice>HCA48</memberoffice>
+  </Recipient>
+  <Constituent>
+    <Prefix>Mr.</prefix>
+    <FirstName>First</firstname>
+    <LastName>Last</lastname>
+    <Address1>2101 O'Neil Avenue</address1>
+    <City>Cheyenne</city>
+    <StateAbbreviation>WY</stateabbreviation>
+    <Zip>82001-3512</zip>
+    <Email>constituent_email@gmail.com</email>
+  </Constituent>
+  <Message>
+    <Subject>My Subject</subject>
+    <LibraryOfCongressTopic>Education</libraryofcongresstopic>
+    <ConstituentMessage>Dear Congresswoman>..............., as a father of two small children, I believe that nothing is more important than access to education.<, >, &, ‘, and ", </constituentmessage>
+    <MoreInfo>http://www.aec.org/issue/legislation/HR233/</moreinfo>
+  </Message>
+</CWC>

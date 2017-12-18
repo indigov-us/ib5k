@@ -1,0 +1,34 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          cwc_app
+# Required-Start:    $all
+# Required-Stop:     $network $local_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start the cwc_app at boot
+# Description:       Enable cwc_app at boot time.
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Change these to match your app:
+APP_NAME=cwc_app
+APP_ROOT="/home/gyordano/production/cwc"
+SET_PATH="cd $APP_ROOT; rvm use 1.9.3;"
+
+case ${1-help} in
+start)
+  daemon --user=gyordano "/bin/bash -l -c 'cd /home/gyordano/production/cwc && rvm use 1.9.3 && bundle exec rake run_prod'"
+  ;;
+stop)
+  daemon --user=gyordano "/bin/bash -l -c cd /home/gyordano/production/cwc && rvm use 1.9.3 && bundle exec rake stop_prod'"
+  ;;
+restart|reload)
+  daemon --user=gyordano "/bin/bash -l -c cd /home/gyordano/production/cwc && rvm use 1.9.3 && bundle exec rake restart_prod'"
+  ;;
+*)
+  echo >&2 "Usage: $0 <start|stop|restart>"
+  exit 1
+  ;;
+esac

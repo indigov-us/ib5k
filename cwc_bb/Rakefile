@@ -1,0 +1,102 @@
+require 'rubygems'
+require "bundler/setup"
+require 'rake'
+
+require 'rake/testtask'
+
+require "minitest/unit"
+require "minitest/spec"
+
+desc "Run development server"
+task :dev_srv do
+  `bundle exec thin -D -e development start`
+end
+
+# desc "Run production server"
+# task :run_prod do
+#   `bundle exec thin -e production --stats /app_stats -d -l logs/production.log -P cwc_api.pid --socket ./cwc_api.sock start`
+# end
+
+
+# desc "Stop production server"
+# task :stop_prod do
+#   `bundle exec thin -e production --stats /app_stats -d -l logs/production.log -P cwc_api.pid --socket ./cwc_api.sock -f stop`
+# end
+
+# desc "Restart production server"
+# task :restart_prod do
+#   Rake::Task["stop_prod"].execute
+#   Rake::Task["run_prod"].execute
+# end
+
+
+desc "Run production server"
+task :run_prod do
+  root = File.expand_path(File.dirname(__FILE__))
+  pid = File.read("#{root}/cwc_api.pid") rescue nil
+  if pid && pid.size > 1
+    # if the pid exists ! don't start error
+    begin
+      Process.kill(0, pid.to_i)
+      puts "CWC App is already running - stop it first, or use restart"
+      exit
+    rescue
+      ; # all fine !
+    end
+
+  end
+  `rm -f #{root}/cwc_api.sock`
+  `nohup bundle exec puma -t 4:16 -b unix://#{root}/cwc_api.sock --pidfile #{root}/cwc_api.pid -e production &>/tmp/puma.out &`
+end
+
+desc "Stop production server"
+task :stop_prod do
+  root = File.expand_path(File.dirname(__FILE__))
+  pid = File.read("#{root}/cwc_api.pid") rescue nil
+  if pid && pid.size > 1
+    begin
+      Process.kill(0, pid.to_i)
+      `kill -9 #{pid}`
+      exit
+    rescue
+      puts "CWC App not running (r)"
+    end
+  else
+    puts "CWC App not running"
+  end
+end
+
+desc "Restart production server"
+task :restart_prod do
+  root = File.expand_path(File.dirname(__FILE__))
+  pid = File.read("#{root}/cwc_api.pid") rescue nil
+  if pid && pid.size > 1
+    begin
+      Process.kill(0, pid.to_i)
+      `kill -s SIGUSR2 #{pid}`
+      exit
+    rescue
+      puts "CWC App not running (r)"
+    end
+  else
+    puts "CWC App not running"
+  end
+end
+
+
+
+Rake::TestTask.new do |t|
+  t.pattern = "spec/**/*_spec.rb"
+end
+
+
+desc 'Run console (pass e=ENVIRONMENT)'
+task :console
+task :con do |t|
+  if ENV['e']
+    ENV['ENVIRONMENT'] = ENV['e']
+  else
+    ENV['ENVIRONMENT'] = 'development'
+  end
+  exec("export ENVIRONMENT=#{ENV['ENVIRONMENT']} && bundle exec irb -r ./lib/config.rb")
+end

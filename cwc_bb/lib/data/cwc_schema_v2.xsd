@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:simpleType name="email_type">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="[^@]+@[^\.]+\..+"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="uid_type">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="[a-zA-Z0-9]{32}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="pro_or_con">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="[Pp][Rr][Oo]|[Cc][Oo][Nn]"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="y_or_n">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="[Yy]|[Nn]"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CWC">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="CWCVersion"/>
+        <xs:element ref="Delivery"/>
+        <xs:element ref="Recipient"/>
+        <xs:element ref="Constituent"/>
+        <xs:element ref="Message"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CWCVersion" type="xs:decimal"/>
+  <xs:element name="Delivery">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="DeliveryId"/>
+        <xs:element ref="DeliveryDate"/>
+        <xs:element ref="DeliveryAgent"/>
+        <xs:element ref="DeliveryAgentAckEmailAddress"/>
+        <xs:element ref="DeliveryAgentContact"/>
+        <xs:element ref="CampaignId"/>
+        <xs:element minOccurs="0" ref="Organization"/>
+        <xs:element minOccurs="0" ref="OrganizationContact"/>
+        <xs:element minOccurs="0" ref="OrganizationAbout"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeliveryId" type="uid_type"/>
+  <xs:element name="DeliveryDate">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="[0-9]{8}"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="DeliveryAgent">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="4"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="DeliveryAgentAckEmailAddress" type="email_type"/>
+  <xs:element name="DeliveryAgentContact">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="DeliveryAgentContactName"/>
+        <xs:element ref="DeliveryAgentContactEmail"/>
+        <xs:element ref="DeliveryAgentContactPhone"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeliveryAgentContactName">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="6"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="DeliveryAgentContactEmail" type="email_type"/>
+  <xs:element name="DeliveryAgentContactPhone">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="CampaignId">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="2"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="Organization">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="6"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="OrganizationContact">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" ref="OrganizationContactName"/>
+        <xs:element minOccurs="0" ref="OrganizationContactEmail"/>
+        <xs:element minOccurs="0" ref="OrganizationContactPhone"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OrganizationContactName">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="2"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="OrganizationContactEmail" type="email_type"/>
+  <xs:element name="OrganizationContactPhone">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="OrganizationAbout">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="6"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="Recipient">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="MemberOffice"/>
+        <xs:element minOccurs="0" ref="IsResponseRequested"/>
+        <xs:element minOccurs="0" ref="NewsletterOptIn"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MemberOffice">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="SHI01|STN02|SNH03|SWY01|SMT02|SAK02|SCO03|SNM01|SCT03|SMO03|SAR03|SCA03|SMA01|SOH01|SNC03|SWA01|SMD01|SDE01|SPA01|SGA02|SIN03|SOK03|SMS02|SME02|SND01|SDE02|STN01|STX02|SID03|SSC03|SIL02|SWY02|SCA01|SMN02|SNY01|SSC02|SIA03|SNC02|SIA02|SUT01|SNV01|SND03|STX01|SOK02|SHI03|SGA03|SNE02|SWI03|SSD02|SMA02|SIL03|SMN01|SWI01|SAZ01|SLA02|SNJ02|SVT03|SUT03|SMI02|SCT01|SIN01|SWV01|SAZ03|SMO01|SKY02|SNJ01|SOR02|SMD03|SKS03|SAK03|SWA03|SFL01|SNE01|SKY03|SOH03|SAR02|SRI02|SNV03|SID02|SKS02|SWV02|SFL03|SVT01|SNY03|SAL02|SNH02|SAL03|SME01|SMI01|SMT01|SSD03|SPA03|SCO02|SNM02|SLA03|SVA02|SVA01|SRI01|SMS01|SOR03|HNY05|HFL24|HAL04|HNJ03|HMO02|HLA05|HPA04|HMI03|HNJ01|HOH07|HCA43|HMN06|HAL06|HWI02|HPA11|HGA12|HMD06|HTX06|HNH02|HCA33|HCA31|HMI01|HND01|HNV01|HCA28|HIL13|HCA50|HFL09|HUT01|HGA02|HNY01|HTN07|HTN07|HOR03|HOH08|HAL01|HCA45|HGU01|HOK02|HIA03|HLA07|HTX08|HPA01|HIA01|HGA10|HFL03|HFL13|HIN08|HNY25|HTX26|HIN05|HNC01|HCA44|HMI04|HCA48|HTX23|HVA07|HWV02|HCA23|HMA08|HCA18|HMO03|HPA10|HIN07|HTX31|HLA06|HFL11|HOH01|HUT03|HKY06|HVI01|HCA32|HRI01|HMI13|HNY11|HMO01|HMO05|HSC06|HNC06|HCO06|HTN09|HOK04|HTX11|HVA11|HMI14|HTN05|HCA20|HIL12|HCT02|HMN08|HAR01|HFL04|HPA12|HNY07|HTX28|HTX07|HMD07|HIL07|HKY04|HCA53|HOR04|HCO01|HCT03|HCA19|HPA15|HTN4|HFL19|HFL25|HWA06|HMI15|HTX25|HIL10|HIN02|HPA14|HCA26|HTN02|HSC03|HMD04|HMN05|HNC02|HMO08|HNY17|HCA14|HAS01|HTX27|HCA17|HPA02|HCA51|HTN08|HPA08|HAZ06|HTN03|HLA04|HTX17|HVA04|HNE01|HNC05|HMA04|HAZ02|HNJ11|HOH11|HCA24|HCA10|HCO04|HNJ05|HPA06|HOH18|HNY20|HAZ08|HGA11|HTX01|HTX20|HVA06|HAZ01|HSC04|HTX12|HMO06|HGA09|HTX09|HTX29|HAR02|HVA09|HAZ07|HNY13|HNH01|HKY02|HIL04|HTX04|HHI01|HNY24|HCA36|HMS03|HMD01|HMO04|HFL23|HWA04|HNY19|HNV03|HNM01|HNV02|HNH02|HCA02|HWA03|HNY27|HCT04|HNY22|HTX15|HHI02|HNY26|HPA17|HNJ12|HCA15|HMD05|HKS01|HMI02|HIL14|HCA52|HVA05|HWA01|HNY02|HCA49|HIL02|HTX18|HKS02|HOH06|HTX30|HGA04|HTX03|HIL15|HNC03|HOH04|HOH09|HMA10|HPA03|HMI05|HWI03|HNY03|HIA05|HGA01|HIL11|HNC08|HMN02|HOH10|HID01|HCO05|HNJ07|HLA03|HRI02|HOK05|HWA02|HCT01|HIA04|HOH14|HOH05|HCA09|HMI12|HCA41|HGA05|HIL03|HNJ02|HIA02|HCA16|HMO07|HNY18|HOK03|HMO09|HNM03|HWY01|HCA03|HMA09|HFL14|HNY14|HIL16|HTX24|HPA10|HMA07|HUT02|HCA05|HNY04|HCA22|HTX10|HCA04|HMN04|HMI11|HWA07|HMA03|HNC10|HNC07|HCA25|HWV01|HWA05|HCA11|HPA07|HNY06|HFL07|HME02|HNC13|HMI10|HCA42|HCA07|HFL01|HWI04|HVA08|HSC05|HCT05|HPA18|HNC09|HNY08|HCA38|HMA02|HTX19|HSD01|HDC01|HFL05|HCA21|HMS01|HTX22|HMA01|HNY23|HMS04|HNJ06|HNJ08|HAZ04|HTX14|HMN03|HNJ10|HNM02|HCA08|HIN06|HCO07|HMI09|HMN07|HWI06|HPR01|HME01|HPA16|HPA19|HTX02|HCO02|HKS04|HFL15|HNC04|HGA06|HAZ03|HIL05|HWV03|HNY15|HNY29|HMT01|HWA08|HOH16|HTX16|HWI08|HCA37|HLA02|HVA02|HFL25|HAL02|HTN01|HKY05|HAL03|HMI08|HCA46|HIN04|HFL16|HIL06|HFL18|HFL12|HAR04|HNJ09|HCA34|HCA40|HNJ03|HMD02|HIL01|HWI01|HOH17|HMP01|HCA39|HCA47|HMD03|HLA01|HIL09|HCA29|HIL17|HOH02|HIL18|HOR05|HPA13|HAZ05|HGA08|HGA13|HVA03|HSC01|HWI05|HNY16|HTX32|HAL07|HCA27|HIL19|HNC11|HPA09|HID02|HNJ13|HNY28|HWA09|HNE03|HNJ04|HTX21|HFL02|HCA12|HCA13|HFL06|HOH15|HIN03|HOK01|HOH13|HNE02|HMS02|HPA05|HCA01|HTX13|HOH12|Hma06|HCO03|HNY21|HNY10|HMA05|MOH03|HMI06|HMD08|HNY12|HIN01|HMI07|HOR02|HIL08|HMN01|HFL20|HCA35|HNC12|HCA30|HFL08|HNY09|HVT01|HFL22|HGA03|HKY01|HFL17|HSC02|HVA01|HVA10|HAR03|HGA07|HCA6|HOR01|HKY03|HKS03|HFL10|HAK01|HIN09"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="IsResponseRequested" type="y_or_n"/>
+  <xs:element name="NewsletterOptIn" type="y_or_n"/>
+  <xs:element name="Constituent">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="Prefix"/>
+        <xs:element ref="FirstName"/>
+        <xs:element ref="LastName"/>
+        <xs:element ref="Address1"/>
+        <xs:element ref="City"/>
+        <xs:element ref="StateAbbreviation"/>
+        <xs:element ref="Zip"/>
+        <xs:element ref="Email"/>
+        <xs:element minOccurs="0" ref="MiddleName"/>
+        <xs:element minOccurs="0" ref="Suffix"/>
+        <xs:element minOccurs="0" ref="Title"/>
+        <xs:element minOccurs="0" ref="ConstituentOrganization"/>
+        <xs:element minOccurs="0" ref="Address2"/>
+        <xs:element minOccurs="0" ref="Address3"/>
+        <xs:element minOccurs="0" ref="Phone"/>
+        <xs:element minOccurs="0" ref="AddressValidation"/>
+        <xs:element minOccurs="0" ref="EmailValidation"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Prefix">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="FirstName">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="2"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="LastName">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="2"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="Address1">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="3"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="City">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="3"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="StateAbbreviation">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="AK|AL|AR|AS|AZ|CA|CO|CT|DC|DE|FL|GA|GU|HI|IA|ID|IL|IN|KS|KY|LA|MA|MD|ME|MI|MN|MO|MP|MS|MT|NC|ND|NE|NH|NJ|NM|NV|NY|OH|OK|OR|PA|PR|RI|SC|SD|TN|TX|UT|VA|VI|VT|WA|WI|WV|WY"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="Zip">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:pattern value="[0-9]{5}(-[0-9]{4})?"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="Email" type="email_type"/>
+  <xs:element name="MiddleName">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="Suffix">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="Title">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="ConstituentOrganization">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="3"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="Address2">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="3"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="Address3">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="3"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="Phone">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="AddressValidation" type="y_or_n"/>
+  <xs:element name="EmailValidation" type="y_or_n"/>
+  <xs:element name="Message">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="Subject"/>
+        <xs:element ref="LibraryOfCongressTopic"/>
+        <xs:element ref="Bill"/>
+        <xs:element ref="ProOrCon"/>
+        <xs:element ref="MoreInfo"/>
+        <xs:choice>
+          <xs:element ref="OrganizationStatement"/>
+          <xs:element ref="ConstituentMessage"/>
+        </xs:choice>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Subject">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="6"/>
+        <xs:maxLength value="500"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="LibraryOfCongressTopic">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="Agriculture and Food"/>
+        <xs:enumeration value="Animals"/>
+        <xs:enumeration value="Armed Forces and National Security"/>
+        <xs:enumeration value="Arts, Culture, Religion"/>
+        <xs:enumeration value="Civil Rights and Liberties, Minority Issues"/>
+        <xs:enumeration value="Commerce"/>
+        <xs:enumeration value="Congress"/>
+        <xs:enumeration value="Crime and Law Enforcement"/>
+        <xs:enumeration value="Economics and Public Finance"/>
+        <xs:enumeration value="Education"/>
+        <xs:enumeration value="Emergency Management"/>
+        <xs:enumeration value="Energy"/>
+        <xs:enumeration value="Environmental Protection"/>
+        <xs:enumeration value="Families"/>
+        <xs:enumeration value="Finance and Financial Sector"/>
+        <xs:enumeration value="Foreign Trade and International Finance"/>
+        <xs:enumeration value="Government Operations and Politics"/>
+        <xs:enumeration value="Health"/>
+        <xs:enumeration value="Housing and Community Development"/>
+        <xs:enumeration value="Immigration"/>
+        <xs:enumeration value="International Affairs"/>
+        <xs:enumeration value="Labor and Employment"/>
+        <xs:enumeration value="Law"/>
+        <xs:enumeration value="Native Americans"/>
+        <xs:enumeration value="Public Lands and Natural Resources"/>
+        <xs:enumeration value="Science, Technology, Communications"/>
+        <xs:enumeration value="Social Sciences and History"/>
+        <xs:enumeration value="Social Welfare"/>
+        <xs:enumeration value="Sports and Recreation"/>
+        <xs:enumeration value="Taxation"/>
+        <xs:enumeration value="Transportation and Public Works"/>
+        <xs:enumeration value="Water Resources Development"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="Bill">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" ref="BillCongress"/>
+        <xs:element minOccurs="0" ref="BillTypeAbbreviation"/>
+        <xs:element minOccurs="0" ref="BillNumber"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BillCongress" type="xs:positiveInteger"/>
+  <xs:element name="BillTypeAbbreviation">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:pattern value="hamdt|hconres|hjres|hr|hres|s|samdt|sconres|sjres|sres"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="BillNumber" type="xs:positiveInteger"/>
+  <xs:element name="ProOrCon" type="pro_or_con"/>
+  <xs:element name="MoreInfo" type="xs:anyURI"/>
+  <xs:element name="OrganizationStatement">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="6"/>
+        <xs:maxLength value="10000"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="ConstituentMessage">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="6"/>
+        <xs:maxLength value="10000"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+</xs:schema>

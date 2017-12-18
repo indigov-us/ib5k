@@ -1,0 +1,8 @@
+/*.log
+.lein-repl-history
+/target
+/*-init.clj
+/resources/public/js
+/checkouts/*
+/resources/public/css
+out

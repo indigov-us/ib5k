@@ -1,0 +1,26 @@
+source "http://rubygems.org"
+gem "rake"
+gem 'mongo'
+gem 'bson'
+gem 'bson_ext'
+gem "rack-test"
+gem "yajl-ruby"
+gem "sinatra"
+gem "sinatra-contrib"
+gem "unicorn"
+gem "rr"
+gem "yard"
+gem "yard-sinatra"
+gem 'mail'
+gem "omniauth"
+gem "unicorn"
+gem "ruby-ldap"
+gem 'nokogiri'
+gem 'faraday'
+gem 'mongoid', "~> 2.4.11"
+gem 'minitest'
+gem 'factory_girl'
+gem 'rack-throttle'
+gem 'qu-mongo'
+gem 'humongous'
+gem 'puma'
