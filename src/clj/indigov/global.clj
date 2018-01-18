@@ -17,6 +17,10 @@
 (defonce conn nil)
 (defonce ldap (atom nil))
 
+(defonce offices {"wa05" {:from_email "wa05@mail.house.gov"
+                          :zd_email "wa05@zendesk.com"
+                          :cwc {:host "https://cwc.house.gov/" :key "SOME_UNIQUE_KEY_HERE"}}})
+
 (defn generate-response [data & [status ]]
   {:status (or status 200)
    :headers {"Content-Type" "application/edn"}

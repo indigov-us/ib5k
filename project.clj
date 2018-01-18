@@ -29,6 +29,10 @@
                  [cider/cider-nrepl "0.15.1"]
                  [refactor-nrepl "2.3.1"]
 
+                 [com.sun.mail/javax.mail "1.6.0"]
+                 [org.jsoup/jsoup "1.11.2"]
+                 [org.clojure/data.xml "0.2.0-alpha5"]
+
                  [org.clojars.pntblnk/clj-ldap "0.0.15"]]
 
   :min-lein-version "2.5.3"
