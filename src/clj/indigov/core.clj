@@ -1,5 +1,5 @@
 (ns indigov.core
-  (:require [indigov [handler :refer [app]] [global :as g] [cwc-to-email :as cwc]]
+  (:require [indigov [handler :refer [app]] [global :as g] [cwc-to-email :as cwc] [email-to-zd :as zd]]
             [clojure.tools.nrepl.server :as nrepl]
             [cider.nrepl :refer (cider-nrepl-handler)]
             [refactor-nrepl.middleware]

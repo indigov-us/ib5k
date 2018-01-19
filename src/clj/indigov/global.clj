@@ -19,6 +19,7 @@
 
 (defonce offices {"wa05" {:from_email "wa05@mail.house.gov"
                           :zd_email "wa05@zendesk.com"
+                          :pop3 {:host "pop.zoho.com" :user "indigov@zoho.com" :pass "indigov_password"}
                           :cwc {:host "https://cwc.house.gov/" :key "SOME_UNIQUE_KEY_HERE"}}})
 
 (defn generate-response [data & [status ]]
